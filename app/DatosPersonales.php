@@ -32,7 +32,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         });
         function agregarGestion(){
             cont3++;
-            var filagestion= '<tr id="filagestion'+cont3+'"><td><input type="text" class="form-control" id="CargoGestion" placeholder="Ingresar Cargo de Gestion">\n\
+            var filagestion= '<tr id="filagestion'+cont3+'"><td><input type="text" class="form-control" id="CargoGestion" placeholder="Ingresar Cargo de Gestion" name="CargoGestion['+cont3+']">\n\
     </td></tr>';
             $('#tablagestion').append(filagestion);
         }
@@ -88,10 +88,10 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                      </tr>
                     <tr>
                         <td>
-                            <input type="text" class="form-control" id="Titulos" placeholder="Ingresar titulo" name="Titulos[]">
+                            <input type="text" class="form-control" id="Titulos[]" placeholder="Ingresar titulo" name="Titulos[]">
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="Otorga" placeholder="Entidad que lo otorga" name="Otorga[]">
+                            <input type="text" class="form-control" id="Otorga[]" placeholder="Entidad que lo otorga" name="Otorga[]">
                         </td>
                     </tr>
                     
@@ -119,19 +119,19 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                       <th>Departamento:</th>
                     </tr>
                     <tr>
-                      <td><select class="form-control" id="CargoDocente" name="CargoDocente">
+                      <td><select class="form-control" id="CargoDocente[]" name="CargoDocente[]">
                 <option>Profesor Titular</option>
                 <option>Profesor Asociado</option>
                 <option>Profesor Adjunto</option>
                 <option>Asistente de Docencia</option>
                 <option>Ayudante de Docencia</option>
             </select></td>
-                      <td><select class="form-control" id="Dedicacion" name="Dedicacion[]">
+                      <td><select class="form-control" id="Dedicacion[]" name="Dedicacion[]">
                 <option>Simple</option>
                 <option>Parcial</option>
                 <option>Completa</option>
             </select></td>
-            <td><select class="form-control" id="Departamento" name="Departamento[]">
+            <td><select class="form-control" id="Departamento[]" name="Departamento[]">
                 <option>Cs. Naturales y Exactas</option>
                 <option>Cs. Sociales</option>
             </select></td>
@@ -170,7 +170,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                      </tr>
                     <tr>
                         <td>
-                            <input type="text" class="form-control" id="Titulos" placeholder="Ingresar Cargo de Gestion" name="CargoGestion[]">
+                            <input type="text" class="form-control" id="CargoGestion[]" placeholder="Ingresar Cargo de Gestion" name="CargoGestion[]">
                         </td>
                     </tr>
                   </table>   

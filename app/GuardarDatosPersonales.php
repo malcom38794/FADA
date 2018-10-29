@@ -20,26 +20,32 @@ $consulta = BDConexion::getInstancia()->query($sql);
 
 $titulos = $_POST['Titulos'];
 $otorga = $_POST['Otorga'];
-$sql="INSERT INTO Titulos VALUES('','$titulos[0]]','$otorga[0]','$dni')";
+$cont= count($otorga);
+for($i=0;$i<$cont;++$i){
+$sql="INSERT INTO Titulos VALUES('','$titulos[$i]','$otorga[$i]','$dni')";
 $consulta = BDConexion::getInstancia()->query($sql);
-
+}
 
 /*Carga Cargos Docentes*/
 
 $cargoDocente=$_POST['CargoDocente'];
 $dedicacion=$_POST['Dedicacion'];
 $departamento=$_POST['Departamento'];
-$sql="INSERT INTO cargosDocentes VALUES('','$cargoDocente','$dedicacion','$departamento','$dni')";
+$cont3 = count($cargoDocente);
+for($ie=0;$ie<$cont3;++$ie){
+$sql="INSERT INTO cargosDocentes VALUES('','$cargoDocente[$ie]','$dedicacion[$ie]','$departamento[$ie]','$dni')";
 $consulta = BDConexion::getInstancia()->query($sql);
-
+}
 
 
 /*Carga Cargos De Gestion*/
 
-$cargoGestion=$_POST['CargoGestion'];
-$sql="INSERT INTO cargosGestion VALUES('','$cargoGestion[0]]','$dni')";
+$cargoGestion = $_POST['CargoGestion'];
+$cont2 = count($cargoGestion);
+for($io=0;$io<$cont2;++$io){
+$sql="INSERT INTO cargosGestion VALUES('','$cargoGestion[$io]','$dni')";
 $consulta = BDConexion::getInstancia()->query($sql);
-
+}
 
 if (!$consulta) {
     BDConexion::getInstancia()->rollback();
