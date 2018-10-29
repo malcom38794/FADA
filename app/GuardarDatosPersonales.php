@@ -4,7 +4,7 @@ include_once '../modelo/BDConexion.Class.php';
 BDConexion::getInstancia()->autocommit(false);
 BDConexion::getInstancia()->begin_transaction();
 
-/*$mail= ;*/
+/*$mail ;*/
 $nombreyApellido=$_POST['NombreYApellido'];
 $dni=$_POST['DNI'];
 
