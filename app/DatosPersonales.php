@@ -48,6 +48,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <?php include_once '../gui/navbar.php'; ?>
 
         <div class="container" id="todo">
+            <form action="GuardarDatosPersonales.php"method="post">
   <h1>Datos Personales</h1>
   <!-- Nombre y Apellido -->
   
@@ -74,9 +75,11 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                   <label>
                     T&iacute;tulo/s:
                     &nbsp;&nbsp;
-                    <button class='btn btn-success' id="btn_add_titulo">Nuevo Título</button>
+                 
+                    <button type="button" class='btn btn-success' id="btn_add_titulo">Nuevo Título</button>
+                    
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-danger' id="btn_del_titulo">Eliminar Titulo</button>
+                    <button type="button" class='btn btn-danger' id="btn_del_titulo">Eliminar Titulo</button>
                   </label>
                   <table class='table table-bordered table-hover' id="tablaTitulos">
                     <tr>
@@ -85,10 +88,10 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                      </tr>
                     <tr>
                         <td>
-                            <input type="text" class="form-control" id="Titulos" placeholder="Ingresar titulo">
+                            <input type="text" class="form-control" id="Titulos" placeholder="Ingresar titulo" name="Titulos[]">
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="Otorga" placeholder="Entidad que lo otorga">
+                            <input type="text" class="form-control" id="Otorga" placeholder="Entidad que lo otorga" name="Otorga[]">
                         </td>
                     </tr>
                     
@@ -105,9 +108,9 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                   <label>
                     Cargos Docentes:
                     &nbsp;&nbsp;
-                    <button class='btn btn-success' id="btn_add_cargo">Nuevo Cargo</button>
+                    <button type="button" class='btn btn-success' id="btn_add_cargo">Nuevo Cargo</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-danger' id="btn_del_cargo">Eliminar Cargo</button>
+                    <button type="button" class='btn btn-danger' id="btn_del_cargo">Eliminar Cargo</button>
                   </label>
                   <table class='table table-bordered table-hover' id="tablaCargos">
                     <tr>
@@ -116,19 +119,19 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                       <th>Departamento:</th>
                     </tr>
                     <tr>
-                      <td><select class="form-control" id="CargoDocente">
+                      <td><select class="form-control" id="CargoDocente" name="CargoDocente">
                 <option>Profesor Titular</option>
                 <option>Profesor Asociado</option>
                 <option>Profesor Adjunto</option>
                 <option>Asistente de Docencia</option>
                 <option>Ayudante de Docencia</option>
             </select></td>
-                      <td><select class="form-control" id="Dedicacion">
+                      <td><select class="form-control" id="Dedicacion" name="Dedicacion[]">
                 <option>Simple</option>
                 <option>Parcial</option>
                 <option>Completa</option>
             </select></td>
-            <td><select class="form-control" id="Departamento">
+            <td><select class="form-control" id="Departamento" name="Departamento[]">
                 <option>Cs. Naturales y Exactas</option>
                 <option>Cs. Sociales</option>
             </select></td>
@@ -146,7 +149,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
     <div class="form-group">
       <label class="control-label col-sm-0" for="pwd">Categor&iacute;a Docente/Investigador:</label>
       <div class="col-sm-20">          
-        <input type="text" class="form-control" id="CategoriaDocente" placeholder="Ingresar su categoria">
+        <input type="text" class="form-control" id="CategoriaDocente" placeholder="Ingresar su categoria" name="CategoriaDocente">
       </div>
     </div>
   
@@ -157,9 +160,9 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                   <label>
                     Cargos de Gestión:
                     &nbsp;&nbsp;
-                    <button class='btn btn-success' id="btn_add_gestion">Nuevo Cargo</button>
+                    <button type="button" class='btn btn-success' id="btn_add_gestion">Nuevo Cargo</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-danger' id="btn_del_gestion">Eliminar Cargo</button>
+                    <button type="button" class='btn btn-danger' id="btn_del_gestion">Eliminar Cargo</button>
                   </label>
                   <table class='table table-bordered table-hover' id="tablagestion">
                     <tr>
@@ -167,7 +170,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                      </tr>
                     <tr>
                         <td>
-                            <input type="text" class="form-control" id="Titulos" placeholder="Ingresar Cargo de Gestion">
+                            <input type="text" class="form-control" id="Titulos" placeholder="Ingresar Cargo de Gestion" name="CargoGestion[]">
                         </td>
                     </tr>
                   </table>   
@@ -178,7 +181,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
     <div class="form-group">
       <label class="control-label col-sm-0" for="pwd">Direcci&oacute;n:</label>
       <div class="col-sm-20">          
-        <input type="text" class="form-control" id="Direccion" placeholder="Ingresar su dirección">
+        <input type="text" class="form-control" id="Direccion" placeholder="Ingresar su dirección" name="Direccion">
       </div>
     </div>
    
@@ -187,7 +190,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
     <div class="form-group">
       <label class="control-label col-sm-0" for="pwd">Telefono:</label>
       <div class="col-sm-20">          
-        <input type="text" class="form-control" id="Telefono" placeholder="Ingresar un telefono de contacto">
+        <input type="text" class="form-control" id="Telefono" placeholder="Ingresar un telefono de contacto" name="Telefono">
       </div>
     </div>
   
@@ -195,11 +198,11 @@ $ColeccionUsuarios = new ColeccionUsuarios();
   
   <div class="form-inline">
     <div>
-    <a href="PADA.php">
-           <button type="button" class="btn btn-success">
+        
+            <button type="submit" class="btn btn-success" name="guardar">
                <span class="oi oi-check"></span> Guardar
              </button>
-         </a>
+        
         &nbsp;&nbsp;&nbsp;&nbsp;
        <a href="PantallaDocentes.php">
            <button type="button" class="btn btn-danger">
@@ -208,7 +211,9 @@ $ColeccionUsuarios = new ColeccionUsuarios();
          </a>
     </div>
    </div>
+  </form>
   </div>
+
         
     
         
