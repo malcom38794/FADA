@@ -18,7 +18,7 @@ $observaciones=$_POST['Formacion_Observaciones'];
 $observacionesdocente=$_POST['Formacion_ObservacionesDocente'];
 $cont= count($curso);
 for($i=0;$i<$cont;++$i){
-$sql="INSERT INTO actividad_formacionpada VALUES('','1','$curso[$i]','$institucion[$i]','$area[$i]','$observaciones','$observacionesdocente')";
+$sql="INSERT INTO actividad_formacionpada VALUES('','1','$curso[$i]','$institucion[$i]','$area[$i]','$observaciones')";
 $consulta = BDConexion::getInstancia()->query($sql);
 }
 

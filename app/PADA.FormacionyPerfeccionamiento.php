@@ -153,7 +153,7 @@ BDConexion::getInstancia()->autocommit(true);
                     <div class="card-header">
                         <div class="form-inline">
                              
-                <button type="submit" class="btn btn-success" onclick="alert('GUARDADO CORRECTAMENTE')">
+                <button type="submit" class="btn btn-success" name="guardar">
                <span class="oi oi-check"></span> Guardar
              </button>
          
@@ -161,12 +161,6 @@ BDConexion::getInstancia()->autocommit(true);
         <a href="PADAE.ActividadDeGestion.php">
            <button type="button" class="btn btn-info">
                <span class="oi oi-arrow-left"></span> Anterior
-             </button>
-         </a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="PADAE.FormacionyPerfeccionamiento.php">
-           <button type="button" class="btn btn-dark">
-               <span class="oi oi-print"></span> Imprimir
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;

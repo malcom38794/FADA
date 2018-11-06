@@ -15,9 +15,9 @@ BDConexion::getInstancia()->begin_transaction();
 $mail = $usuario->email;
 $sqldni="SELECT DNI FROM docente WHERE Mail = {$mail}";
 $dni = BDConexion::getInstancia()->query($sqldni);
-$rows = $dni->fetchAll();
+$rows = mysql_fetch_assoc($dni);
 $documento = $rows['DNI'];
-var_dump($documento);
+var_dump($rows);
 $sqlpada="SELECT Docente_DNI FROM pada WHERE Docente_DNI = {$dni}";
 $existepada= BDConexion::getInstancia()->query($sqlpada);
 echo $existepada;*/
