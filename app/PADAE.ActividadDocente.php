@@ -16,7 +16,30 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script> 
-        <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/PADA.ActividadDocente.js"></script>
+        <script>
+        var cont=0;
+        $(document).ready(function(){
+            $('#btn_add_Actividad').click(function(){
+                agregarActividad();
+            });
+            $('#btn_del_Actividad').click(function(){
+                eliminarActividad();
+            });
+        });
+        function agregarActividad(){
+            cont++;
+            var fila= '<tr id="fila'+cont+'"><td><input type="text" class="form-control" placeholder="Asignatura" id="ActividadDocente_Asignatura['+cont+']" name="ActividadDocente_Asignatura['+cont+']"/>\n\
+            </td><td><select class="form-control" id="ActividadDocente_Dedicacion['+cont+']" name="ActividadDocente_Dedicacion['+cont+']"><option>Responsable</option><option>Integrante</option>\n\
+            <option>Colaborador</option></select></td><td><input type="number" class="form-control" placeholder="Cantidad semanal" id="ActividadDocente_Semanal['+cont+']" name="ActividadDocente_Semanal['+cont+']"/> \n\
+            </td><td><select class="form-control" id="ActividadDocente_Tipo['+cont+']" name="ActividadDocente_Tipo['+cont+']"><option>Anual</option><option>Cuatrimestral</option></select></td></tr>';
+            $('#tablaActividadPADA').append(fila);
+        }
+        function eliminarActividad(){
+            $('#fila'+cont).remove();
+            cont--;
+        }
+        
+        </script>
         <title><?= Constantes::NOMBRE_SISTEMA; ?> - Usuarios</title>
     </head>
     <body>
@@ -45,14 +68,13 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <!-- Formulario PADAE -->
         
          <div class="container" >  
-             
-             
+             <form action="#"method="post">
                  <label class="form-inline">
                     <h4>Actividad Docente:</h4>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-primary' id="btn_add_Actividad">Nueva Actividad</button>
+                    <button type="button" class='btn btn-primary' id="btn_add_Actividad">Nueva Actividad</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-danger' id="btn_del_Actividad">Eliminar Actividad</button>
+                    <button type="button" class='btn btn-danger' id="btn_del_Actividad">Eliminar Actividad</button>
                   </label>
              <div class="card">
                   <table class='table table-bordered table-hover' id="tablaActividadPADA">
@@ -98,11 +120,13 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                
                  
                      <br>
-                 <div class="card">
-                   <label class="control-label col-sm-0" for="pwd">Otros:</label>
-                   <input type="text" placeholder="Para ser utilizado en la evaluacion de desempeño" class="textbox" />
-               </div>
-             </div>
+            
+                     <div class="card">
+                         <h5> Oservaciones del docente</h5>
+                         <input type="text" placeholder="Oservaciones" class="form-control" id="Observaciones" name="Observaciones"/>
+                     </div>
+         
+             
 
         
         
@@ -118,23 +142,23 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <div class="card">
                     <div class="card-header">
                         <div class="form-inline">
-                             <a href="PADA.php">
-           <button type="button" class="btn btn-info">
+                             
+                <button type="submit" class="btn btn-success">
                <span class="oi oi-check"></span> Guardar
              </button>
-         </a>
+         
         &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="PADAE.ActividadDeExtension.php">
-           <button type="button" class="btn btn-success">
-               <span class="oi oi-plus"></span> Siguiente
+           <button type="button" class="btn btn-info">
+               <span class="oi oi-arrow-right"></span> Siguiente
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="PADAE.ActividadDeExtension.php">
-           <button type="button" class="btn btn-warning">
+        
+            <button type= "reset" class="btn btn-warning">
                <span class="oi oi-trash"></span> Borrar Campos
              </button>
-         </a>
+        
        &nbsp;&nbsp;&nbsp;&nbsp;        
         <a href="PantallaDocentes.php">
            <button type="button" class="btn btn-danger">
@@ -144,6 +168,8 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     </div>
                     </div>
                 </div>
+        </div>
+             </form>
         </div>
         <!-- Barra Inferior dentro de la carpeta gui -->
         

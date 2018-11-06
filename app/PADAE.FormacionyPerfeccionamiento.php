@@ -6,7 +6,31 @@
 include_once '../lib/ControlAcceso.Class.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
 include_once '../modelo/ColeccionUsuarios.php';
-$ColeccionUsuarios = new ColeccionUsuarios();
+include_once '../modelo/BDConexion.Class.php';
+
+BDConexion::getInstancia()->autocommit(false);
+BDConexion::getInstancia()->begin_transaction();
+
+$asignatura=$_POST['Gestion_Proyecto'];
+$calidad=$_POST['Gestion_Calidad'];
+$hs=$_POST['Gestion_Horas'];
+$tipo=$_POST['Gestion_Tipo'];
+$otro=$_POST['Gestion_Otro'];
+$cont= count($asignatura);
+for($i=0;$i<$cont;++$i){
+$sql="INSERT INTO actividad_gestionpada VALUES('','1','$asignatura[$i]','$calidad[$i]','$hs[$i]','$tipo[$i]','$otro')";
+$consulta = BDConexion::getInstancia()->query($sql);
+}
+
+
+if (!$consulta) {
+    BDConexion::getInstancia()->rollback();
+    die(BDConexion::getInstancia()->errno);
+}
+
+
+BDConexion::getInstancia()->commit();
+BDConexion::getInstancia()->autocommit(true);
 
 ?>
 <html>
@@ -66,35 +90,35 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <!-- Formulario PADAE -->
         
          <div class="container" >
-             
+             <form action="PADA.Imprimir.php"method="post"> 
              <label class="form-inline">
              <h4>Formacion y Perfeccionamiento:</h4>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-primary' id="btn_add_Actividad">Nuevo Curso</button>
+                    <button type="button" class='btn btn-primary' id="btn_add_Actividad">Nuevo Curso</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-danger' id="btn_del_Actividad">Eliminar Curso</button>
+                    <button type="button" class='btn btn-danger' id="btn_del_Actividad">Eliminar Curso</button>
                   </label>
              <div class="card">
              <table class='table table-bordered table-hover' id="tablaActividadPADA">
                     <tr>
-                      <th>Curso/Actividad:</th>
+                      <th>Carrera/Programa/Curso/Actividad:</th>
                       <th>Institución:</th>
                       <th>Area:</th>
                       </tr>
                     <tr>
                       <td>
                           <div class="col-sm-20"> 
-                          <input type="text" placeholder="Curso/Actividad" class="form-control" />
+                          <input type="text" placeholder="Curso/Actividad" class="form-control" id="Formacion_Curso[]" name="Formacion_Curso[]"/>
                           </div>
                       </td>
                       <td>
                           <div class="col-sm-20">          
-                            <input type="text" placeholder="Institución" class="form-control" />
+                            <input type="text" placeholder="Institución" class="form-control" id="Formacion_Institucion[]" name="Formacion_Institucion[]"/>
                           </div>
                       </td>
                     <td>
                         <div class="col-sm-20"> 
-                        <input type="text" placeholder="Area" class="form-control" />
+                        <input type="text" placeholder="Area" class="form-control" id="Formacion_Area[]" name="Formacion_Area[]"/>
                         </div>
                     </td>
                   
@@ -103,12 +127,17 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                   </table>
              </div>
                      <br>
-                 <div class="card">
-                   <label class="control-label col-sm-0" for="pwd">Otros:</label>
-                   <input type="text" placeholder="Para ser utilizado en la evaluacion de desempeño" class="textbox" />
-               </div>
-             </div>
-
+            <div class="card">
+                         <h5> Oservaciones</h5>
+                         <input type="text" placeholder="Oservaciones" class="form-control" id="Formacion_Observaciones" name="Formacion_Observaciones"/>
+            </div>
+             
+            <br>
+            
+            <div class="card">
+                         <h5> Oservaciones del docente</h5>
+                         <input type="text" placeholder="Oservaciones" class="form-control" id="Formacion_ObservacionesDocente" name="Formacion_ObservacionesDocente"/>
+            </div>
         
         
         
@@ -123,9 +152,15 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <div class="card">
                     <div class="card-header">
                         <div class="form-inline">
-                             <a href="PADA.php">
-           <button type="button" class="btn btn-info">
+                             
+                <button type="submit" class="btn btn-success" onclick="alert('GUARDADO CORRECTAMENTE')">
                <span class="oi oi-check"></span> Guardar
+             </button>
+         
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="PADAE.ActividadDeGestion.php">
+           <button type="button" class="btn btn-info">
+               <span class="oi oi-arrow-left"></span> Anterior
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -135,11 +170,11 @@ $ColeccionUsuarios = new ColeccionUsuarios();
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="PADAE.ActividadDeExtension.php">
-           <button type="button" class="btn btn-warning">
+        
+            <button type="reset" class="btn btn-warning">
                <span class="oi oi-trash"></span> Borrar Campos
              </button>
-         </a>
+        
        &nbsp;&nbsp;&nbsp;&nbsp;        
         <a href="PantallaDocentes.php">
            <button type="button" class="btn btn-danger">
@@ -149,6 +184,8 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     </div>
                     </div>
                 </div>
+        </div>
+        </form>
         </div>
         <!-- Barra Inferior dentro de la carpeta gui -->
         

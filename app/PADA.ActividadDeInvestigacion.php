@@ -6,7 +6,36 @@
 include_once '../lib/ControlAcceso.Class.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
 include_once '../modelo/ColeccionUsuarios.php';
-$ColeccionUsuarios = new ColeccionUsuarios();
+include_once '../modelo/BDConexion.Class.php';
+
+BDConexion::getInstancia()->autocommit(false);
+BDConexion::getInstancia()->begin_transaction();
+
+$asignatura=$_POST['Extension_Proyecto'];
+$calidad=$_POST['Extension_Calidad'];
+$hs=$_POST['Extension_Horas'];
+$tipo=$_POST['Extension_Tipo'];
+$otro=$_POST['Extension_Otro'];
+$cont= count($asignatura);
+for($i=0;$i<$cont;++$i){
+$sql="INSERT INTO actividad_extensionpada VALUES('','1','$asignatura[$i]','$calidad[$i]','$hs[$i]','$tipo[$i]','$otro')";
+$consulta = BDConexion::getInstancia()->query($sql);
+}
+
+
+if (!$consulta) {
+    BDConexion::getInstancia()->rollback();
+    die(BDConexion::getInstancia()->errno);
+}
+
+
+BDConexion::getInstancia()->commit();
+BDConexion::getInstancia()->autocommit(true);
+
+
+
+
+
 
 ?>
 <html>
@@ -45,13 +74,13 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <!-- Formulario PADA -->
         
          <div class="container" >    
-             
+             <form action="PADA.ActividadDeGestion.php"method="post">
              <label class="form-inline">
                     <h4>Actividad de Investigación:</h4>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-primary' id="btn_add_Actividad">Nueva Actividad</button>
+                    <button type="button" class='btn btn-primary' id="btn_add_Actividad">Nueva Actividad</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-danger' id="btn_del_Actividad">Eliminar Actividad</button>
+                    <button type="button" class='btn btn-danger' id="btn_del_Actividad">Eliminar Actividad</button>
                   </label>
              <div class="card">
                   <table class='table table-bordered table-hover' id="tablaActividadPADA">
@@ -64,12 +93,12 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     <tr>
                       <td>
                           <div class="col-sm-20"> 
-                          <input type="text" placeholder="Proyecto/Programa" class="form-control" />
+                          <input type="text" placeholder="Proyecto/Programa" class="form-control" id="Investigacion_Proyecto[]" name="Investigacion_Proyecto[]"/>
                           </div>
                       </td>
                       <td>
                           <div class="col-sm-20"> 
-                        <select class="form-control" id="Dedicacion">
+                        <select class="form-control" id="Investigacion_Calidad[]" name="Investigacion_Calidad[]">
                         <option>Director</option>
                         <option>Codirector</option>
                         <option>Colaborador</option>
@@ -79,11 +108,11 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                       </td>
                     <td>
                         <div class="col-sm-20"> 
-                        <input type="number" placeholder="Cantidad semanal" class="form-control" />
+                        <input type="number" placeholder="Cantidad semanal" class="form-control" id="Investigacion_Horas[]" name="Investigacion_Horas[]"/>
                         </div>
                     </td>
                     <td><div class="col-sm-20"> 
-                        <select class="form-control" id="Dedicacion">
+                        <select class="form-control" id="Investigacion_Tipo[]" name="Investigacion_Tipo[]">
                         <option>Anual</option>
                         <option>Cuatrimestral</option>
                         </select>
@@ -96,11 +125,23 @@ $ColeccionUsuarios = new ColeccionUsuarios();
              </div>
         
                      <br>
-                 <div class="card">
-                   <label class="control-label col-sm-0" for="pwd">Otros:</label>
-                   <input type="text" placeholder="Para ser utilizado en la evaluacion de desempeño" class="textbox" />
+            <div class="card">
+                     <table class='table table-bordered table-hover'>
+                         <tr>
+                             <th>Otros</th>
+                             <th>Hs. Equivalente Anual</th>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <input type="text" placeholder="Para ser utilizado en la evaluacion de desempeño" class="form-control" id="Investigacion_Otro" name="Investigacion_Otro"/>
+                             </td>
+                             <td>
+                                 <input type="text" placeholder="Cantidad de horas" class="form-control" id="Investigacion_HsAnual" name="Investigacion_HsAnual"/>
+                             </td>
+                         </tr>
+                     </table>
                </div>
-             </div>
+             
 
         
         
@@ -116,23 +157,29 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <div class="card">
                     <div class="card-header">
                         <div class="form-inline">
-                             <a href="PADA.php">
-           <button type="button" class="btn btn-info">
+        
+            <button type="submit" class="btn btn-success" name="guardar" onclick="alert('GUARDADO CORRECTAMENTE')">
                <span class="oi oi-check"></span> Guardar
+             </button>
+         
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="PADA.ActividadDeExtension.php">
+           <button type="button" class="btn btn-info">
+               <span class="oi oi-arrow-left"></span> Anterior
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="PADA.ActividadDeGestion.php">
-           <button type="button" class="btn btn-success">
-               <span class="oi oi-plus"></span> Siguiente
+           <button type="button" class="btn btn-info">
+               <span class="oi oi-arrow-right"></span> Siguiente
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="PADA.ActividadDeExtension.php">
-           <button type="button" class="btn btn-warning">
+        
+           <button type="reset" class="btn btn-warning">
                <span class="oi oi-trash"></span> Borrar Campos
              </button>
-         </a>
+         
        &nbsp;&nbsp;&nbsp;&nbsp;        
         <a href="PantallaDocentes.php">
            <button type="button" class="btn btn-danger">
@@ -142,6 +189,8 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     </div>
                     </div>
                 </div>
+        </div>
+        </form>
         </div>
         <!-- Barra Inferior dentro de la carpeta gui -->
         

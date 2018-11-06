@@ -18,6 +18,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>   
         <script>
         var cont=0;
+        var cont2=0;
         $(document).ready(function(){
             $('#btn_add_Actividad').click(function(){
                 agregarActividad();
@@ -25,18 +26,36 @@ $ColeccionUsuarios = new ColeccionUsuarios();
             $('#btn_del_Actividad').click(function(){
                 eliminarActividad();
             });
+            $('#btn_add_ActividadPADAE').click(function(){
+                agregarActividadPADAE();
+            });
+            $('#btn_del_ActividadPADAE').click(function(){
+                eliminarActividadPADAE();
+            });
         });
         function agregarActividad(){
             cont++;
-            var fila= '<tr id="fila'+cont+'"><td><input type="text" class="form-control" placeholder="Proyecto/Programa" />\n\
-            </td><td><select class="form-control" id="Dedicacion"><option>Director</option><option>Codirector</option>\n\
-            <option>Colaborador</option><option>Integrante</option></select></td><td><input type="number" class="form-control" placeholder="Cantidad semanal" /> \n\
+            var fila= '<tr id="fila'+cont+'"><td><input type="text" class="form-control" placeholder="Proyecto/Programa/Area" />\n\
+            </td><td><select class="form-control" id="Dedicacion"><option>Cargo</option><option>Responsable</option>\n\
+            <option>Colaborador</option></select></td><td><input type="number" class="form-control" placeholder="Cantidad semanal" /> \n\
             </td><td><select class="form-control" id="Dedicacion"><option>Anual</option><option>Cuatrimestral</option></select></td></tr>';
             $('#tablaActividadPADA').append(fila);
         }
         function eliminarActividad(){
             $('#fila'+cont).remove();
             cont--;
+        }
+        function agregarActividadPADAE(){
+            cont2++;
+            var fila= '<tr id="filaPADAE'+cont2+'"><td><input type="text" class="form-control" placeholder="Proyecto/Programa/Area" />\n\
+            </td><td><select class="form-control" id="Dedicacion"><option>Cargo</option><option>Responsable</option>\n\
+            <option>Colaborador</option></select></td><td><input type="number" class="form-control" placeholder="Cantidad semanal" /> \n\
+            </td><td><select class="form-control" id="Dedicacion"><option>Anual</option><option>Cuatrimestral</option></select></td></tr>';
+            $('#tablaActividadPADAE').append(fila);
+        }
+        function eliminarActividadPADAE(){
+            $('#filaPADAE'+cont2).remove();
+            cont2--;
         }
         </script>
         <title><?= Constantes::NOMBRE_SISTEMA; ?> - Usuarios</title>
@@ -67,17 +86,18 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <!-- Formulario PADAE -->
         
          <div class="container" >
+             <form action="#"method="post"> 
              <label class="form-inline">
              <h4>Actividad de Gestion:</h4>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-primary' id="btn_add_Actividad">Nueva Actividad</button>
+                    <button type="button" class='btn btn-primary' id="btn_add_Actividad">Nueva Actividad</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-danger' id="btn_del_Actividad">Eliminar Actividad</button>
+                    <button type="button" class='btn btn-danger' id="btn_del_Actividad">Eliminar Actividad</button>
                   </label>
              <div class="card">
              <table class='table table-bordered table-hover' id="tablaActividadPADA">
                     <tr>
-                      <th>Proyecto/Programa:</th>
+                      <th>Proyecto/Programa/Area:</th>
                       <th>Calidad:</th>
                       <th>Hs Asignadas:</th>
                       <th>Tipo:</th>
@@ -85,16 +105,15 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     <tr>
                       <td>
                           <div class="col-sm-20"> 
-                          <input type="text" placeholder="Proyecto/Programa" class="form-control" />
+                          <input type="text" placeholder="Proyecto/Programa/Area" class="form-control" />
                           </div>
                       </td>
                       <td>
                           <div class="col-sm-20"> 
                         <select class="form-control" id="Dedicacion">
-                        <option>Director</option>
-                        <option>Codirector</option>
+                        <option>Cargo</option>
+                        <option>Responsable</option>
                         <option>Colaborador</option>
-                        <option>Integrante</option>
                         </select>
                           </div>
                       </td>
@@ -116,12 +135,79 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                   </table>
              </div>
                      <br>
-                 <div class="card">
-                   <label class="control-label col-sm-0" for="pwd">Otros:</label>
-                   <input type="text" placeholder="Para ser utilizado en la evaluacion de desempeño" class="textbox" />
+            
+            <div class="card">
+                     <table class='table table-bordered table-hover'>
+                         <tr>
+                             <th>Otros</th>
+                             <th>Hs. Equivalente Anual</th>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <input type="text" placeholder="Para ser utilizado en la evaluacion de desempeño" class="form-control" id="ActividadDeInvestigacion_Otro" name="ActividadDeInvestigacion_Otro"/>
+                             </td>
+                             <td>
+                                 <input type="text" placeholder="Cantidad de horas" class="form-control" id="HsAnual" name="HsAnual"/>
+                             </td>
+                         </tr>
+                     </table>
                </div>
+                     
+                     <br>
+                     
+            <label class="form-inline">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class='btn btn-primary' id="btn_add_ActividadPADAE">Nueva Actividad</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class='btn btn-danger' id="btn_del_ActividadPADAE">Eliminar Actividad</button>
+                  </label>
+             <div class="card">
+             <table class='table table-bordered table-hover' id="tablaActividadPADAE">
+                    <tr>
+                      <th>Proyecto/Programa/Area:</th>
+                      <th>Calidad:</th>
+                      <th>Hs Asignadas:</th>
+                      <th>Tipo:</th>
+                      </tr>
+                    <tr>
+                      <td>
+                          <div class="col-sm-20"> 
+                          <input type="text" placeholder="Proyecto/Programa/Area" class="form-control" />
+                          </div>
+                      </td>
+                      <td>
+                          <div class="col-sm-20"> 
+                        <select class="form-control" id="Dedicacion">
+                        <option>Cargo</option>
+                        <option>Responsable</option>
+                        <option>Colaborador</option>
+                        </select>
+                          </div>
+                      </td>
+                    <td>
+                        <div class="col-sm-20"> 
+                        <input type="number" placeholder="Cantidad semanal" class="form-control" />
+                        </div>
+                    </td>
+                    <td><div class="col-sm-20"> 
+                        <select class="form-control" id="Dedicacion">
+                        <option>Anual</option>
+                        <option>Cuatrimestral</option>
+                        </select>
+                        </div>
+                    </td>
+                  
+                    </tr>
+                    
+                  </table>
              </div>
-
+             
+            <br>
+        
+                     <div class="card">
+                         <h5> Oservaciones del docente</h5>
+                         <input type="text" placeholder="Oservaciones" class="form-control" id="Observaciones" name="Observaciones"/>
+                     </div>
         
         
         
@@ -136,23 +222,29 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <div class="card">
                     <div class="card-header">
                         <div class="form-inline">
-                             <a href="PADA.php">
-           <button type="button" class="btn btn-info">
+                             
+                <button type="submit" class="btn btn-success">
                <span class="oi oi-check"></span> Guardar
+             </button>
+         
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="PADAE.ActividadDeInvestigacion.php">
+           <button type="button" class="btn btn-info">
+               <span class="oi oi-arrow-left"></span> Anterior
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="PADAE.FormacionyPerfeccionamiento.php">
-           <button type="button" class="btn btn-success">
-               <span class="oi oi-plus"></span> Siguiente
+           <button type="button" class="btn btn-info">
+               <span class="oi oi-arrow-right"></span> Siguiente
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="PADAE.ActividadDeExtension.php">
-           <button type="button" class="btn btn-warning">
+        
+           <button type="reset" class="btn btn-warning">
                <span class="oi oi-trash"></span> Borrar Campos
              </button>
-         </a>
+         
        &nbsp;&nbsp;&nbsp;&nbsp;        
         <a href="PantallaDocentes.php">
            <button type="button" class="btn btn-danger">
@@ -162,6 +254,8 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     </div>
                     </div>
                 </div>
+        </div>
+             </form>
         </div>
         <!-- Barra Inferior dentro de la carpeta gui -->
         

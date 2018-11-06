@@ -1,22 +1,25 @@
-<html>    
+<?php
 
-<head>    
-<title>Guardar datos en una base de datos</title>    
-</head>    
+include_once '../lib/ControlAcceso.Class.php';
+include_once '../modelo/BDConexion.Class.php';
+BDConexion::getInstancia()->autocommit(false);
+BDConexion::getInstancia()->begin_transaction();
 
-<body>    
 
-<form method="POST" action="registra.php">    
 
-    <p>Nombre: <input type="text" name="nombre" size="20"></p>    
-    <p>E-mail: <input type="text" name="email" size="20"></p>    
-        
-    <p><input type="submit" value="Guardar datos" name="B1"></p>    
-        
-</form>    
+$usuario = $_SESSION['usuario'];
+$mail = $usuario->email;
+$sqldni="SELECT DNI FROM docente WHERE Mail = '{$mail}'";
+$dni = BDConexion::getInstancia()->query($sqldni);
+$ret = mysql_fetch_array($dni);
+var_dump($ret);
+$segm = $ret['DNI'];
+var_dump($segm);
 
-</body>    
 
-</html>    
 
   
+BDConexion::getInstancia()->commit();
+BDConexion::getInstancia()->autocommit(true);
+
+?>

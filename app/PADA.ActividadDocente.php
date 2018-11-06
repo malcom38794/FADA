@@ -1,14 +1,10 @@
 <?php
-
-/* 
- * Menu de Formulario PADA
- */
 include_once '../lib/ControlAcceso.Class.php';
-ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
 include_once '../modelo/ColeccionUsuarios.php';
-$ColeccionUsuarios = new ColeccionUsuarios();
+include_once '../modelo/BDConexion.Class.php';
 
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -16,7 +12,30 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <link rel="stylesheet" href="../lib/open-iconic-master/font/css/open-iconic-bootstrap.css" />
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script> 
-        <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/PADA.ActividadDocente.js"></script>
+        <script>
+                var cont=0;
+        $(document).ready(function(){
+            $('#btn_add_Actividad').click(function(){
+                agregarActividad();
+            });
+            $('#btn_del_Actividad').click(function(){
+                eliminarActividad();
+            });
+        });
+        function agregarActividad(){
+            cont++;
+            var fila= '<tr id="fila'+cont+'"><td><input type="text" class="form-control" placeholder="Asignatura" id="ActividadDocente_Asignatura['+cont+']" name="ActividadDocente_Asignatura['+cont+']"/>\n\
+            </td><td><select class="form-control" id="ActividadDocente_Dedicacion['+cont+']" name="ActividadDocente_Dedicacion['+cont+']"><option>Responsable</option><option>Integrante</option>\n\
+            <option>Colaborador</option></select></td><td><input type="number" class="form-control" placeholder="Cantidad semanal" id="ActividadDocente_Semanal['+cont+']" name="ActividadDocente_Semanal['+cont+']"/> \n\
+            </td><td><select class="form-control" id="ActividadDocente_Tipo['+cont+']" name="ActividadDocente_Tipo['+cont+']"><option>Anual</option><option>Cuatrimestral</option></select></td></tr>';
+            $('#tablaActividadPADA').append(fila);
+        }
+        function eliminarActividad(){
+            $('#fila'+cont).remove();
+            cont--;
+        }
+        
+        </script>
         <title><?= Constantes::NOMBRE_SISTEMA; ?> - Usuarios</title>
     </head>
     <body>
@@ -45,14 +64,14 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <!-- Formulario PADA -->
         
          <div class="container" >  
-             
+             <form action="PADA.ActividadDeExtension.php"method="post">
              
                  <label class="form-inline">
                     <h4>Actividad Docente:</h4>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-primary' id="btn_add_Actividad">Nueva Actividad</button>
+                    <button type="button" class='btn btn-primary' id="btn_add_Actividad">Nueva Actividad</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class='btn btn-danger' id="btn_del_Actividad">Eliminar Actividad</button>
+                    <button type="button" class='btn btn-danger' id="btn_del_Actividad">Eliminar Actividad</button>
                   </label>
              <div class="card">
                   <table class='table table-bordered table-hover' id="tablaActividadPADA">
@@ -65,12 +84,12 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     <tr>
                       <td>
                          
-                          <input type="text" class="form-control" placeholder="Asignatura" />
+                          <input type="text" class="form-control" placeholder="Asignatura" id="ActividadDocente_Asignatura[]" name="ActividadDocente_Asignatura[]" />
                           
                       </td>
                       <td>
                           
-                        <select class="form-control" id="Dedicacion">
+                        <select class="form-control" id="ActividadDocente_Dedicacion[]" name="ActividadDocente_Dedicacion[]">
                         <option>Responsable</option>
                         <option>Integrante</option>
                         <option>Colaborador</option>
@@ -79,11 +98,11 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                       </td>
                     <td>
                          
-                        <input type="number" class="form-control" placeholder="Cantidad semanal" />
+                        <input type="number" class="form-control" placeholder="Cantidad semanal" id="ActividadDocente_Semanal[]" name="ActividadDocente_Semanal[]"/>
                         
                     </td>
                     <td> 
-                        <select class="form-control" id="Dedicacion">
+                        <select class="form-control" id="ActividadDocente_Tipo[]" name="ActividadDocente_Tipo[]">
                         <option>Anual</option>
                         <option>Cuatrimestral</option>
                         </select>
@@ -99,10 +118,22 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                  
                      <br>
                  <div class="card">
-                   <label class="control-label col-sm-0" for="pwd">Otros:</label>
-                   <input type="text" placeholder="Para ser utilizado en la evaluacion de desempeño" class="textbox" />
+                     <table class='table table-bordered table-hover'>
+                         <tr>
+                             <th>Otros</th>
+                             <th>Hs. Equivalente Anual</th>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <input type="text" placeholder="Para ser utilizado en la evaluacion de desempeño" class="form-control" id="ActividadDocente_Otro" name="ActividadDocente_Otro"/>
+                             </td>
+                             <td>
+                                 <input type="text" placeholder="Cantidad de horas" class="form-control" id="HsAnual" name="HsAnual"/>
+                             </td>
+                         </tr>
+                     </table>
                </div>
-             </div>
+            
 
         
         
@@ -118,23 +149,23 @@ $ColeccionUsuarios = new ColeccionUsuarios();
         <div class="card">
                     <div class="card-header">
                         <div class="form-inline">
-                             <a href="PADA.php">
-           <button type="button" class="btn btn-info">
+                    
+           <button type="submit" class="btn btn-success" name="guardar" onclick="alert('GUARDADO CORRECTAMENTE')">
                <span class="oi oi-check"></span> Guardar
              </button>
-         </a>
+               
         &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="PADA.ActividadDeExtension.php">
-           <button type="button" class="btn btn-success">
-               <span class="oi oi-plus"></span> Siguiente
+           <button type="button" class="btn btn-info">
+               <span class="oi oi-arrow-right"></span> Siguiente
              </button>
          </a>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="PADA.ActividadDeExtension.php">
-           <button type="button" class="btn btn-warning">
+        
+            <button type="reset" class="btn btn-warning">
                <span class="oi oi-trash"></span> Borrar Campos
              </button>
-         </a>
+         
        &nbsp;&nbsp;&nbsp;&nbsp;        
         <a href="PantallaDocentes.php">
            <button type="button" class="btn btn-danger">
@@ -145,6 +176,8 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     </div>
                 </div>
         </div>
+         </form>
+             </div>
         <!-- Barra Inferior dentro de la carpeta gui -->
         
         <?php include_once '../gui/footer.php'; ?>
