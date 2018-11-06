@@ -49,7 +49,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                                &nbsp;&nbsp;&nbsp;&nbsp;
                                <a href="PADA.Gestion.php">
                         <button type="button" class="btn btn-success">
-                            <span class="oi oi-plus"></span> ver formularios anteriores
+                            <span class="oi oi-plus"></span> Visualizar formularios anteriores
                         </button>
                     </a>
                     </p>
@@ -80,7 +80,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                                &nbsp;&nbsp;&nbsp;&nbsp;
                                <a href="PADAE.php">
                         <button type="button" class="btn btn-success">
-                            <span class="oi oi-plus"></span> ver formularios anteriores
+                            <span class="oi oi-plus"></span> Visualizar formularios anteriores
                         </button>
                     </a>
                     </p>
